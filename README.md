@@ -69,5 +69,6 @@ UC8 --> PS
 10. Я, как водитель внедорожника, хочу более тщательную очистку своей машины, чтобы мой автомобиль был в хорошем состоянии после путешествий по бездорожью.
 
 ## <h2>ERD</h2>
-![image](https://github.com/user-attachments/assets/78c22775-8af9-4fae-9424-9602853ba55c)
+![image](https://github.com/user-attachments/assets/77dac427-ff1c-4b1d-a015-9514a4288469)
+
 
