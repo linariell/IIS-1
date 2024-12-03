@@ -5,7 +5,7 @@
 DAU: 15% от 500.000 = 75.000 человек. <br>
 RPS: 75.000/24/3600 ~ 1 чел./сек. <br>
 
-## <h2>UseCase</h2>
+## <h2>UseCase diagram</h2>
 ![image](https://github.com/user-attachments/assets/7522bf76-427d-4145-8325-c18877db0428)
 ```
 @startuml
