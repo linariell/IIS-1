@@ -13,8 +13,24 @@ tags:
   - name: Автомойки
     description: Выбор автомойки
 paths:
-# post, put, delete, list
   /user:
+      get:
+        summary: Получить список пользователей
+        tags: 
+          - Пользователь
+        description: Все пользователи
+        operationId: UserArray
+        responses:
+            '200':
+              description: Успешно
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+            '404':
+              description: Пользователи не найдены
       
       post:
         tags:
@@ -167,8 +183,39 @@ paths:
             description: Неверный номер
           '404':
             description: Авто не найдено
+  /wash:
+    post:
+      tags:
+        - Автомойки
+      summary: Добавить автомойку
+      description: Добавить автомойку
+      operationId: AddWash
+      requestBody:
+            description: Автомойка создана
+            content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Wash'
+                  application/xml:
+                    schema:
+                      $ref: '#/components/schemas/Wash'
+                  application/x-www-form-urlencoded:
+                    schema:
+                      $ref: '#/components/schemas/Wash'
+      responses:
+                default:
+                  description: Выполнено успешно
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/Wash'
+                    application/xml:
+                      schema:
+                        $ref: '#/components/schemas/Wash'
       
-    
+      
+## Компоненты
+
 components:
   schemas:
     Auto:
@@ -220,12 +267,27 @@ components:
             example: '12345'
         xml:
           name: user
-  requestBodies:
-    UserArray:
-          description: List of user object
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
+    Wash:
+      type: object
+      properties:
+            id:
+              type: integer
+              format: int64
+              example: 1
+            Title:
+              type: string
+              example: Лучшая
+            Services:
+              type: array
+              items: 
+                type: string
+              
+              example: ['Химчистка','Помыть машину','Помыть машину (хорошо)']
+            Coords:
+              type: array
+              items: 
+                type: number
+              example: [46.948301, 142.724515]
+      xml:
+          name: wash
+        
