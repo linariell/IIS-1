@@ -4,15 +4,21 @@ info:
   description:  "учебное задание"
   version: 0.0.1
 tags:
-  - name: user
-    description: Operations about user
+  - name: Пользователь
+    description: Настройка аккаунта
+  - name: Авто
+    description: Управление автомобилями
+  - name: Заказы
+    description: Управление заказами
+  - name: Автомойки
+    description: Выбор автомойки
 paths:
 # post, put, delete, list
   /user:
       post:
         tags:
-          - user
-        summary: Create user
+          - Пользователь
+        summary: Создать пользователя
         description: This can only be done by the logged in user.
         operationId: createUser
         requestBody:
@@ -40,7 +46,7 @@ paths:
   /user/{username}:
       delete:
         tags:
-          - user
+          - Пользователь
         summary: Delete user
         description: This can only be done by the logged in user.
         operationId: deleteUser
@@ -56,9 +62,59 @@ paths:
             description: Invalid username supplied
           '404':
             description: User not found
-                
+  /auto:
+      post:
+        tags:
+        - Авто
+        summary: Добавить авто
+        description: Добавить новое авто
+        operationId: createAuto
+        requestBody:
+            description: Created auto
+            content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Auto'
+                  application/xml:
+                    schema:
+                      $ref: '#/components/schemas/Auto'
+                  application/x-www-form-urlencoded:
+                    schema:
+                      $ref: '#/components/schemas/Auto'
+        responses:
+                default:
+                  description: successful operation
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/Auto'
+                    application/xml:
+                      schema:
+                        $ref: '#/components/schemas/Auto'
 components:
   schemas:
+    Auto:
+      type: object
+      properties:
+          id:
+            type: integer
+            format: int64
+            example: 1
+          Userid:
+            type: integer
+            format: int64
+            example: 1
+          Brand:
+            type: string
+            example: Toyota
+          Model:
+            type: string
+            example: Mark 2
+          Number:
+            type: string
+            example: М123ЯУ
+      xml:
+        name: auto
     User:
         type: object
         properties:
