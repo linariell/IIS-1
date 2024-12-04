@@ -15,6 +15,7 @@ tags:
 paths:
 # post, put, delete, list
   /user:
+      
       post:
         tags:
           - Пользователь
@@ -44,6 +45,34 @@ paths:
                 schema:
                   $ref: '#/components/schemas/User'
   /user/{username}:
+      put:
+            tags:
+              - Пользователь
+            summary: Обновить
+            description: Обновить информацию
+            operationId: UpdateUser
+            parameters:
+              - name: username
+                in: path
+                description: name that need to be deleted
+                required: true
+                schema:
+                  type: string
+            requestBody:
+              description: Update an existent user in the store
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/User'
+                application/xml:
+                  schema:
+                    $ref: '#/components/schemas/User'
+                application/x-www-form-urlencoded:
+                  schema:
+                    $ref: '#/components/schemas/User'
+            responses:
+              default:
+                description: successful operation
       delete:
         tags:
           - Пользователь
@@ -92,6 +121,34 @@ paths:
                       schema:
                         $ref: '#/components/schemas/Auto'
   /auto/{Number}:
+    put:
+            tags:
+              - Авто
+            summary: Обновить
+            description: Обновить информацию
+            operationId: UpdateAuto
+            parameters:
+              - name: Number
+                in: path
+                description: Госномер
+                required: true
+                schema:
+                  type: string
+            requestBody:
+              description: Обновить информацию о существующем авто
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Auto'
+                application/xml:
+                  schema:
+                    $ref: '#/components/schemas/Auto'
+                application/x-www-form-urlencoded:
+                  schema:
+                    $ref: '#/components/schemas/Auto'
+            responses:
+              default:
+                description: successful operation
     delete:
       tags:
         - Авто
