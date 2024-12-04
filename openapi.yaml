@@ -22,7 +22,7 @@ paths:
         description: This can only be done by the logged in user.
         operationId: createUser
         requestBody:
-          description: Created user object
+          description: Пользователь создан
           content:
             application/json:
               schema:
@@ -35,7 +35,7 @@ paths:
                 $ref: '#/components/schemas/User'
         responses:
           default:
-            description: successful operation
+            description: Выполнено успешно
             content:
               application/json:
                 schema:
@@ -62,7 +62,7 @@ paths:
             description: Invalid username supplied
           '404':
             description: User not found
-  /auto:
+  /auto: #надо ли при добавлении указывать id владельца??
       post:
         tags:
         - Авто
@@ -70,7 +70,7 @@ paths:
         description: Добавить новое авто
         operationId: createAuto
         requestBody:
-            description: Created auto
+            description: Авто создано
             content:
                   application/json:
                     schema:
@@ -83,7 +83,7 @@ paths:
                       $ref: '#/components/schemas/Auto'
         responses:
                 default:
-                  description: successful operation
+                  description: Выполнено успешно
                   content:
                     application/json:
                       schema:
@@ -91,6 +91,27 @@ paths:
                     application/xml:
                       schema:
                         $ref: '#/components/schemas/Auto'
+  /auto/{Number}:
+    delete:
+      tags:
+        - Авто
+      summary: Удалить авто по госномеру
+      description: Удалить авто, введя его госномер
+      operationId: deleteAuto
+      parameters:
+          - name: Number
+            in: path
+            description: Госномер машины
+            required: true
+            schema:
+              type: string
+      responses:
+          '400':
+            description: Неверный номер
+          '404':
+            description: Авто не найдено
+      
+    
 components:
   schemas:
     Auto:
