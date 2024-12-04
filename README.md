@@ -68,7 +68,8 @@ UC8 --> PS
 ### UC9 Управление профилем
 
 ## <h2>ERD</h2>
-![image](https://github.com/user-attachments/assets/77dac427-ff1c-4b1d-a015-9514a4288469)
+![image](https://github.com/user-attachments/assets/f8e4e6d9-05de-4ecd-8103-5574a0be6425)
+
 
 - У клиента может быть несколько авто. Связь "Один-ко-многим"
 - Автомойки предоставляют много услуг. Связь "Один-ко-многим"
