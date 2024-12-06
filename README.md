@@ -90,7 +90,11 @@ ERD диаграмма нужна для наглядного представл
 
 ## 4. C4 model
 ### C1 - System Context
+![image](https://github.com/user-attachments/assets/cc2e2f8b-06e3-4b8f-9303-5be7e35c8dd2)
+
 ### C2 - Containers
+![image](https://github.com/user-attachments/assets/b3ff8dc0-3aa8-432c-b65b-852f5980ed96)
+
 ## 5. Sequence diagram
 ## 6.* OpenAPI
 Я создала небольшое учебное API для приложения автомойки. В нем показаны основные функции:
