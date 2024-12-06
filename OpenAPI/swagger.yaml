@@ -592,6 +592,11 @@ components:
           format: date-time
         Is_Free:
           type: boolean
+          example: true
+        Duration:
+          type: integer
+          description: min
+          example: 20
       required:
         - dateTime
         - Is_Free
