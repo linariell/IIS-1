@@ -1,0 +1,703 @@
+openapi: 3.0.1
+info:
+  title: Автомойка API
+  description: "учебное задание"
+  version: 0.0.1
+tags:
+  - name: Пользователь
+    description: Настройка аккаунта
+  - name: Авто
+    description: Управление автомобилями
+  - name: Автомойка
+    description: Управление автомойками
+  - name: Заказ
+    description: Управление заказами
+  - name: Расписание
+    description: Управление слотами
+paths:
+  /slots:
+    get:
+      tags: 
+        - Расписание
+      summary: Получить все слоты
+      responses:
+        '200':
+          description: Список всех слотов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Slot'
+    post:
+      tags: 
+        - Расписание
+      summary: Создать новый слот
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Slot'
+      responses:
+        '201':
+          description: Слот успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slot'
+
+  /slots/{id}:
+    put:
+      tags: 
+        - Расписание
+      summary: Обновить слот по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID слота
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Slot'
+      responses:
+        '200':
+          description: Слот успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slot'
+        '404':
+          description: Слот не найден
+
+    delete:
+      tags: 
+        - Расписание
+      summary: Удалить слот по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID слота
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Слот успешно удален
+        '404':
+          description: Слот не найден
+  /slots/{id}/reserve:
+    post:
+      tags: 
+        - Расписание
+      summary: Забронировать слот
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID слота
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Слот успешно забронирован
+        '400':
+          description: Слот уже занят
+        '404':
+          description: Слот не найден
+  /order:
+    get:
+      tags:
+        - Заказ
+      summary: Получить все заказы
+      description: Возвращает список всех заказов
+      operationId: getOrders
+      responses:
+        '200':
+          description: Успешное получение заказов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+
+    post:
+      tags:
+        - Заказ
+      summary: Создать новый заказ
+      description: Создает новый заказ
+      operationId: createOrder
+      requestBody:
+        description: Заказ создан
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Заказ успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+
+  /order/{id}:
+    get:
+      tags:
+        - Заказ
+      summary: Получить заказ по ID
+      description: Возвращает информацию о заказе по ID
+      operationId: getOrderById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID заказа, который нужно получить
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешное получение заказа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Заказ не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Заказ не найден"
+
+    put:
+      tags:
+        - Заказ
+      summary: Обновить заказ
+      description: Обновить информацию о существующем заказе по ID
+      operationId: updateOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID заказа, который нужно обновить
+          schema:
+            type: integer
+      requestBody:
+        description: Обновленные данные заказа
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Успешное обновление
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Заказ не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Заказ не найден"
+
+    delete:
+      tags:
+        - Заказ
+      summary: Удалить заказ
+      description: Удалить заказ по ID
+      operationId: deleteOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID заказа, который нужно удалить
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Успешное удаление
+        '404':
+          description: Заказ не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Заказ не найден"
+  /order/{id}/pay:
+    
+    post:
+      tags: 
+      - Пользователь
+      - Заказ
+      summary: Оплатить заказ
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID заказа для оплаты
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Заказ успешно оплачен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Заказ не найден
+  /wash:
+    get:
+      tags:
+        - Автомойка
+      summary: Получить список всех автомоек
+      description: Возвращает массив всех автомоек
+      operationId: getWashes
+      responses:
+        '200':
+          description: Успешное получение списка автомоек
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wash'
+    post:
+      tags:
+        - Автомойка
+      summary: Добавить автомойку
+      description: Добавить новую автомойку
+      operationId: createWash
+      requestBody:
+        description: Автомойка создана
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wash'
+      responses:
+        '201':
+          description: Автомойка успешно добавлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wash'
+
+  /wash/{id}:
+    put:
+      tags:
+        - Автомойка
+      summary: Обновить автомойку
+      description: Обновить информацию о существующей автомойке по ID
+      operationId: updateWash
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID автомойки, которую нужно обновить
+          schema:
+            type: integer
+      requestBody:
+        description: Обновленные данные автомойки
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Wash'
+      responses:
+        '200':
+          description: Успешное обновление
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wash'
+        '404':
+          description: Автомойка не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Автомойка не найдена"
+
+    delete:
+      tags:
+        - Автомойка
+      summary: Удалить автомойку
+      description: Удалить автомойку по ID
+      operationId: deleteWash
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID автомойки, которую нужно удалить
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Успешное удаление
+        '404':
+          description: Автомойка не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Автомойка не найдена"
+  /user:
+    post:
+      tags:
+        - Пользователь
+      summary: Создать пользователя
+      description: This can only be done by the logged in user.
+      operationId: createUser      
+      requestBody:
+        required: true
+        description: Пользователь создан
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Выполнено успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    get:
+      tags:
+        - Пользователь
+      summary: Получить всех пользователей
+      description: Возвращает массив всех пользователей
+      operationId: getUsers
+      responses:
+        '200':
+          description: Успешное получение списка пользователей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /user/{id}:
+    put:
+      tags:
+        - Пользователь
+      summary: Обновить пользователя
+      description: Обновление существующего пользователя по ID
+      operationId: updateUser     
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя, который нужно обновить
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Обновленные данные пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Успешное обновление
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Пользователь не найден"
+    delete:
+      tags:
+        - Пользователь
+      summary: Удалить пользователя
+      description: Удаление пользователя по ID
+      operationId: deleteUser     
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя, который нужно удалить
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Успешное удаление
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Пользователь не найден"
+
+  /auto:
+    get:
+      tags:
+        - Авто
+      summary: Получить список всех автомобилей
+      description: Возвращает массив всех автомобилей
+      operationId: getAutos
+      responses:
+        '200':
+          description: Успешное получение списка автомобилей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Auto'
+    post:
+      tags:
+        - Авто
+      summary: Добавить авто
+      description: Добавить новое авто
+      operationId: createAuto
+      requestBody:
+        description: Авто создано
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auto'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Auto'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Auto'
+      responses:
+        '201':
+          description: Авто успешно добавлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Auto'
+
+  /auto/{id}:
+    put:
+      tags:
+        - Авто
+      summary: Обновить автомобиль
+      description: Обновить информацию о существующем автомобиле по ID
+      operationId: updateAuto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID автомобиля, который нужно обновить
+          schema:
+            type: integer
+      requestBody:
+        description: Обновленные данные автомобиля
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auto'
+      responses:
+        '200':
+          description: Успешное обновление
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auto'
+        '404':
+          description: Автомобиль не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Автомобиль не найден"
+
+    delete:
+      tags:
+        - Авто
+      summary: Удалить автомобиль
+      description: Удалить автомобиль по ID
+      operationId: deleteAuto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID автомобиля, который нужно удалить
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Успешное удаление
+        '404':
+          description: Автомобиль не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Автомобиль не найден"
+
+    
+
+components:
+  schemas:
+    Slot:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        dateTime:
+          type: string
+          format: date-time
+        Is_Free:
+          type: boolean
+      required:
+        - dateTime
+        - Is_Free
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        User_id:
+          type: integer
+          format: int64
+          example: 1
+        Wash_id:
+          type: integer
+          format: int64
+          example: 1
+        Auto_id:
+          type: integer
+          format: int64
+          example: 1
+        Slot_id:
+          type: integer
+          example: 1
+        Service:
+          type: array
+          items:
+            type: string
+          example: ["Химчистка"]
+        Amount:
+          type: number
+          format: float
+          example: 700.00
+        Is_Paid:
+          type: boolean
+          example: false
+        
+    Wash:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        Title:
+          type: string
+          example: Лучшая
+        Services:
+          type: array
+          items: 
+            type: string
+          example: ['Химчистка','Помыть машину','Помыть машину (хорошо)']
+        Coords:
+          type: array
+          items: 
+            type: number
+          example: [46.948301, 142.724515]
+      xml:
+        name: wash
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: linariell
+        firstName:
+          type: string
+          example: Polina
+        lastName:
+          type: string
+          example: Vitkovskaya
+        email:
+          type: string
+          example: p.vitkovskaya@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+      xml:
+        name: user
+    Auto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        Userid:
+          type: integer
+          format: int64
+          example: 1
+        Brand:
+          type: string
+          example: Toyota
+        Model:
+          type: string
+          example: Mark 2
+        Number:
+          type: string
+          example: М123ЯУ
+      xml:
+        name: auto
