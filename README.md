@@ -32,7 +32,8 @@
 10. Я, как водитель внедорожника, хочу более тщательную очистку своей машины, чтобы мой автомобиль был в хорошем состоянии после путешествий по бездорожью.
 
 ## <h2>2. UseCase diagram</h2>
-![image](https://github.com/user-attachments/assets/7522bf76-427d-4145-8325-c18877db0428)
+![image](https://github.com/user-attachments/assets/44b4ed99-71ec-439c-919c-ea7dbc39bb01)
+
 ```
 @startuml
 left to right direction
@@ -41,14 +42,14 @@ actor "платилка" as PS
 rectangle Автомойка {
 usecase "Управление профилем" as UC1
 usecase "Управление т/с" as UC2
-
-usecase "Выбор города" as UC3
-usecase "Выбор мойки" as UC4
-usecase "Выбор услуги" as UC5
-usecase "Выбор даты и времени" as UC6
-usecase "Выбор способа оплаты" as UC7
-usecase "Оплатить услугу" as UC8
-usecase "Отменить запись" as UC9
+usecase "Запись на услугу" as UC3
+usecase "Выбор города" as UC4
+usecase "Выбор мойки" as UC5
+usecase "Выбор услуги" as UC6
+usecase "Выбор даты и времени" as UC7
+usecase "Выбор способа оплаты" as UC8
+usecase "Оплатить услугу" as UC9
+usecase "Отменить запись" as UC10
 }
 fc --> UC1
 fc --> UC2
@@ -59,6 +60,7 @@ fc --> UC6
 fc --> UC7
 fc --> UC8
 fc --> UC9
+fc --> UC10
 UC8 --> PS
 ```
 ### Сценарии использования
