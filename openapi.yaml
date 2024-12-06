@@ -3,6 +3,8 @@ info:
   title: Автомойка API
   description:  "учебное задание"
   version: 0.0.1
+servers:
+  - url: http://localhost:8000/api/v1
 tags:
   - name: Пользователь
     description: Настройка аккаунта
@@ -35,10 +37,14 @@ paths:
       post:
         tags:
           - Пользователь
+        security:
+        - oauth2:
+            - write
         summary: Создать пользователя
         description: This can only be done by the logged in user.
         operationId: createUser
         requestBody:
+          required: true
           description: Пользователь создан
           content:
             application/json:
@@ -290,4 +296,13 @@ components:
               example: [46.948301, 142.724515]
       xml:
           name: wash
-        
+  securitySchemes:
+      oauth2:
+        type: oauth2
+        flows:
+          authorizationCode:
+            authorizationUrl: https://example.com/oauth/authorize
+            tokenUrl: https://example.com/oauth/token
+            scopes:
+              read: Read access to data
+              write: Write access to data
