@@ -523,7 +523,8 @@ else Автомобиль уже есть в БД
 end
 ```
 ### Запись на мойку
-![image](https://github.com/user-attachments/assets/844395bc-307b-431b-8c9f-dfff96a6c74d)
+![Untitled (1)](https://github.com/user-attachments/assets/5d05ae62-c908-4b75-903d-57970c22a993)
+
 
 
 ```
