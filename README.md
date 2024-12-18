@@ -533,12 +533,14 @@ end
 end
 ```
 ### Запись на мойку
-![image](https://github.com/user-attachments/assets/58bed5a9-9a34-4655-8cf0-da8c4aff82e9)
+![image](https://github.com/user-attachments/assets/bb44a160-3e3c-47be-9326-642fa3bbc46f)
+
 
 
 
 
 ```
+autonumber
 Пользователь -> Система: Записаться на мойку
 Система -> База данных: Запрос доступных автомоек
 База данных->База данных:Чтение данных из БД
